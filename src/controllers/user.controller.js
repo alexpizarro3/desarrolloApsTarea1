@@ -48,7 +48,7 @@ const crearUsuario = async (req, res, next) => {
 }
 
 const borrarUsuario = async (req, res, next) => {
-    const { id } = req.params;
+    const { id } = req.params; //Asignamos el id
     try {
         const result = await pool.query(`DELETE FROM "Users"."Usuario" 
                                     WHERE "userCedula" = '${id}' RETURNING *`);
