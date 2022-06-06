@@ -1,8 +1,9 @@
 const {Pool} = require('pg'); //Traemos la clase Pool de PG para poder hacer la conexion de BD
-require ('dotenv').config({path: './.env'});
+const { conexion } = require('./config');
+//Mensaje
 
 const pool = new Pool ({
-    connectionString: process.env.DATABASE_URL,
+    connectionString: conexion.URL,
     ssl: {
         rejectUnauthorized: false
     }
