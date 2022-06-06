@@ -10,7 +10,7 @@ app.use(morgan('dev'));
 app.use(express.json());
 app.use(usersRoutes);
 
-app.use((err, req, res, next) => {
+app.use((err, req, res, next) => {//Funcion de error
     return res.json({
         message: err.message
     });
