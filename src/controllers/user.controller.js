@@ -28,7 +28,7 @@ const getUserById = async (req, res, next) => {
         const result = await pool.query(`SELECT * FROM "Users"."Usuario", "Users"."Roles" 
                                     WHERE "roleNombre" = "userRole" AND "userCedula" = '${id}'`);
         if (result.rows.length === 0) return res.status(404).json({
-            message: "Usuario no encontrado"
+            message: "Usuario no esta en lista"
         })
         res.json(result.rows[0]);
     } catch (error) {
