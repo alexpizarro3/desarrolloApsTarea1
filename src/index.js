@@ -18,6 +18,6 @@ app.use((err, req, res, next) => {//Funcion de error
 
 const port = conexion.PORT || 3000;
 app.listen(port, () => {
-    console.log('Desde el server ' + port);
+    console.log('Desde el server principal ' + port);
 });
 
