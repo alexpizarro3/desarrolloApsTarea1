@@ -139,11 +139,11 @@ const borrarProducto = async (req, res, next) => {
 const updateProducto = async (req, res, next) => {
     try {
         const { id } = req.params;
-        const { Nombre, Descripcion, Tipo, PrecioVenta, PrecioCompra, Inventario } = req.body;
+        const { Nombre, Descripcion, Tipo, PrecioVenta, PrecioCompra } = req.body;
         const result = await pool.query(`UPDATE "Users"."Productos" SET "Nombre" = '${Nombre}', 
-                                    "Descripcion" = '${Descripcion}', "Tipo" = '${Tipo}', "PrecioVenta" = '${PrecioVenta}',
-                                    "PrecioCompra" = '${PrecioCompra}', "Inventario" = '${Inventario}' 
-                                    WHERE "IdProducto" = '${id}' RETURNING *;`);
+                                    "Descripcion" = '${Descripcion}', "Tipo" = ${Tipo}, "PrecioVenta" = ${PrecioVenta},
+                                    "PrecioCompra" = ${PrecioCompra}
+                                    WHERE "IdProducto" = ${id} RETURNING *;`);
         if (result.rows.length === 0) return res.status(404).json({
             message: "Producto no encontrado"
         });
