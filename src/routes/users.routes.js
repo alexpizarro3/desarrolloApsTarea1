@@ -12,7 +12,7 @@ router.post('/crearUser', crearUsuario);
 router.delete('/borrarUser/:id', borrarUsuario);
 router.put('/upUser/:id', updateUsuario);
 
-router.get('/productos', getAllProductos);
+router.get('/productos/', getAllProductos);
 router.get('/productos/tipos', gelAllTipoProducto);
 router.get('/productos/:id', getProductoById);
 router.post('/crearProducto', crearProducto);

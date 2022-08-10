@@ -110,10 +110,12 @@ const getProductoById = async (req, res, next) => {
 }
 
 const crearProducto = async (req, res, next) => {
-    const { Nombre, Descripcion, Tipo, PrecioVenta, PrecioCompra } = req.body;
+    const { nombre, descripcion, tipo, precioventa, preciocompra } = req.body;
+    console.log(nombre, descripcion, tipo, precioventa, preciocompra);
     try {
-        const resultInsert = await pool.query(`INSERT INTO "Users"."Productos"("Nombre", "Descripcion", "Tipo", "PrecioVenta", "PrecioCompra", "Inventario")
-        VALUES ('${Nombre}', '${Descripcion}', '${Tipo}', '${PrecioVenta}', '${PrecioCompra}', '0') RETURNING *;`);
+        const resultInsert = await pool.query(`INSERT INTO "Users"."Productos"
+        ("Nombre", "Descripcion", "Tipo", "PrecioVenta", "PrecioCompra", "Inventario")
+        VALUES ('${nombre}', '${descripcion}', ${tipo}, ${precioventa}, ${preciocompra}, '0' ) RETURNING *;`);
         res.json(resultInsert.rows[0]);
     } catch (error) {
         next(error);
