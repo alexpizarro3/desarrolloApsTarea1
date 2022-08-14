@@ -111,7 +111,6 @@ const getProductoById = async (req, res, next) => {
 
 const crearProducto = async (req, res, next) => {
     const { nombre, descripcion, tipo, precioventa, preciocompra } = req.body;
-    console.log(nombre, descripcion, tipo, precioventa, preciocompra);
     try {
         const resultInsert = await pool.query(`INSERT INTO "Users"."Productos"
         ("Nombre", "Descripcion", "Tipo", "PrecioVenta", "PrecioCompra", "Inventario")
@@ -153,7 +152,29 @@ const updateProducto = async (req, res, next) => {
     }
 }
 
+const crearVenta = async (req, res, next) => {
+    const { CedulaUsuario, Tipo, Fecha} = req.body;
+    try {
+        const resultInsert = await pool.query(`INSERT INTO "Users"."Ventas"
+        ("CedulaUsuario", "Tipo", "Fecha")
+        VALUES (${CedulaUsuario}, '${Tipo}', '${Fecha}' ) RETURNING *;`);
+        res.json(resultInsert.rows[0]);
+    } catch (error) {
+        next(error);
+    }
+}
 
+const crearDetalleVenta = async (req, res, next) => {
+    const { IdVenta, IdProducto, Cantidad, PrecioVenta, SubTotal } = req.body;
+    try {
+        const resultInsert = await pool.query(`INSERT INTO "Users"."VentaDetalle"
+        ("IdVenta", "IdProducto", "Cantidad", "PrecioVenta", "SubTotal")
+        VALUES (${IdVenta}, ${IdProducto}, ${Cantidad}, ${PrecioVenta}, ${SubTotal} ) RETURNING *;`);
+        res.json(resultInsert.rows[0]);
+    } catch (error) {
+        next(error);
+    }
+}
 
 module.exports = {
     getAllUsers,
@@ -169,4 +190,6 @@ module.exports = {
     crearProducto,
     borrarProducto,
     updateProducto,
+    crearVenta,
+    crearDetalleVenta,
 };
