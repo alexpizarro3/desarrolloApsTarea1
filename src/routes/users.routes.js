@@ -1,5 +1,5 @@
 const {Router} = require('express');
-const { getAllUsers, pagInicio, getUserById, gelAllRoles, crearUsuario, borrarUsuario, updateUsuario, getAllProductos, gelAllTipoProducto, getProductoById, crearProducto, borrarProducto, updateProducto, crearVenta, crearDetalleVenta} = require('../controllers/user.controller');
+const { getAllUsers, pagInicio, getUserById, gelAllRoles, crearUsuario, borrarUsuario, updateUsuario, getAllProductos, gelAllTipoProducto, getProductoById, crearProducto, borrarProducto, updateProducto, crearVenta, crearDetalleVenta, updateInventario} = require('../controllers/user.controller');
 
 const pool = require('../db');
 const router = Router();
@@ -21,5 +21,6 @@ router.put('/upProducto/:id', updateProducto);
 
 router.post('/crearVenta/', crearVenta);
 router.post('/crearDetalleVenta/', crearDetalleVenta);
+router.put('/updateInventario/:id', updateInventario);
 
 module.exports = router;

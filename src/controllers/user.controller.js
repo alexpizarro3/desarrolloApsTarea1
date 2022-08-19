@@ -153,7 +153,7 @@ const updateProducto = async (req, res, next) => {
 }
 
 const crearVenta = async (req, res, next) => {
-    const { CedulaUsuario, Tipo, Fecha} = req.body;
+    const { CedulaUsuario, Tipo, Fecha } = req.body;
     try {
         const resultInsert = await pool.query(`INSERT INTO "Users"."Ventas"
         ("CedulaUsuario", "Tipo", "Fecha")
@@ -176,6 +176,22 @@ const crearDetalleVenta = async (req, res, next) => {
     }
 }
 
+const updateInventario = async (req, res, next) => {
+    console.log(req.params.id);
+    try {
+        const { id } = req.params;
+        const { Cantidad } = req.body;
+        const result = await pool.query(`UPDATE "Users"."Productos" SET "Inventario" = "Inventario" + ${Cantidad} 
+                                    WHERE "IdProducto" = ${id} RETURNING *;`);
+        if (result.rows.length === 0) return res.status(404).json({
+            message: "Producto no encontrado"
+        });
+        return res.json(result.rows[0]);
+    } catch (error) {
+        next(error);
+    }
+}
+
 module.exports = {
     getAllUsers,
     pagInicio,
@@ -192,4 +208,5 @@ module.exports = {
     updateProducto,
     crearVenta,
     crearDetalleVenta,
+    updateInventario,
 };
