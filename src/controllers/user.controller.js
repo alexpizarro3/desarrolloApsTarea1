@@ -176,6 +176,31 @@ const crearDetalleVenta = async (req, res, next) => {
     }
 }
 
+const crearCompra = async (req, res, next) => {
+    const { CedulaUsuario, Tipo, Fecha } = req.body;
+    try {
+        const resultInsert = await pool.query(`INSERT INTO "Users"."Compras"
+        ("CedulaUsuario", "Tipo", "Fecha")
+        VALUES (${CedulaUsuario}, '${Tipo}', '${Fecha}' ) RETURNING *;`);
+        res.json(resultInsert.rows[0]);
+    } catch (error) {
+        next(error);
+    }
+}
+
+const crearDetalleCompra = async (req, res, next) => {
+    const { IdCompra, IdProducto, Cantidad, PrecioCompra, SubTotal } = req.body;
+    try {
+        const resultInsert = await pool.query(`INSERT INTO "Users"."CompraDetalle"
+        ("IdCompra", "IdProducto", "Cantidad", "PrecioCompra", "SubTotal")
+        VALUES (${IdCompra}, ${IdProducto}, ${Cantidad}, ${PrecioCompra}, ${SubTotal} ) RETURNING *;`);
+        res.json(resultInsert.rows[0]);
+    } catch (error) {
+        next(error);
+    }
+}
+
+
 const updateInventario = async (req, res, next) => {
     console.log(req.params.id);
     try {
@@ -208,5 +233,7 @@ module.exports = {
     updateProducto,
     crearVenta,
     crearDetalleVenta,
+    crearCompra,
+    crearDetalleCompra,
     updateInventario,
 };
